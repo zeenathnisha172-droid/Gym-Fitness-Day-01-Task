@@ -1,0 +1,1420 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEONFIT ULTRA | Hyper-Animative Fitness Experience</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        neon: {
+                            lime: '#CCFF00',
+                            cyan: '#00F0FF',
+                            magenta: '#FF007F',
+                            dark: '#050508',
+                            card: '#0f0f13',
+                            border: '#1f1f2e'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #050508;
+            color: #F3F4F6;
+            overflow-x: hidden;
+            cursor: default;
+        }
+        @media (min-width: 768px) {
+            body, a, button, input, select, textarea {
+                cursor: none !important;
+            }
+        }
+        .glow-lime {
+            box-shadow: 0 0 40px rgba(204, 255, 0, 0.35);
+        }
+        .glow-cyan {
+            box-shadow: 0 0 40px rgba(0, 240, 255, 0.3);
+        }
+        .glow-magenta {
+            box-shadow: 0 0 40px rgba(255, 0, 127, 0.3);
+        }
+        .text-glow-lime {
+            text-shadow: 0 0 25px rgba(204, 255, 0, 0.6);
+        }
+        
+        @keyframes floatLevitate {
+            0% {
+                transform: translateY(0px) rotate(0deg);
+                box-shadow: 0 0 35px rgba(204, 255, 0, 0.3);
+            }
+            50% {
+                transform: translateY(-16px) rotate(0.5deg);
+                box-shadow: 0 0 65px rgba(204, 255, 0, 0.6), 0 0 25px rgba(0, 240, 255, 0.3);
+            }
+            100% {
+                transform: translateY(0px) rotate(0deg);
+                box-shadow: 0 0 35px rgba(204, 255, 0, 0.3);
+            }
+        }
+        .animate-float-levitate {
+            animation: floatLevitate 5s ease-in-out infinite;
+        }
+        @keyframes morphBlob1 {
+            0% {
+                transform: translate(0px, 0px) scale(1) rotate(0deg);
+                border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+            }
+            33% {
+                transform: translate(80px, -60px) scale(1.25) rotate(120deg);
+                border-radius: 40% 60% 70% 30% / 50% 60% 40% 50%;
+            }
+            66% {
+                transform: translate(-50px, 70px) scale(0.9) rotate(240deg);
+                border-radius: 50% 50% 40% 60% / 70% 40% 60% 30%;
+            }
+            100% {
+                transform: translate(0px, 0px) scale(1) rotate(360deg);
+                border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+            }
+        }
+
+        @keyframes morphBlob2 {
+            0% {
+                transform: translate(0px, 0px) scale(1) rotate(0deg);
+                border-radius: 30% 70% 50% 50% / 30% 50% 70% 50%;
+            }
+            33% {
+                transform: translate(-100px, 90px) scale(1.3) rotate(-120deg);
+                border-radius: 70% 30% 40% 60% / 60% 40% 60% 40%;
+            }
+            66% {
+                transform: translate(60px, -80px) scale(0.85) rotate(-240deg);
+                border-radius: 40% 60% 60% 40% / 40% 70% 30% 60%;
+            }
+            100% {
+                transform: translate(0px, 0px) scale(1) rotate(-360deg);
+                border-radius: 30% 70% 50% 50% / 30% 50% 70% 50%;
+            }
+        }
+
+        @keyframes morphBlob3 {
+            0% {
+                transform: translate(0px, 0px) scale(1);
+                opacity: 0.2;
+            }
+            50% {
+                transform: translate(40px, 50px) scale(1.4);
+                opacity: 0.4;
+            }
+            100% {
+                transform: translate(0px, 0px) scale(1);
+                opacity: 0.2;
+            }
+        }
+
+        .animate-blob-1 {
+            animation: morphBlob1 18s ease-in-out infinite;
+        }
+        .animate-blob-2 {
+            animation: morphBlob2 22s ease-in-out infinite;
+        }
+        .animate-blob-3 {
+            animation: morphBlob3 14s ease-in-out infinite;
+        }
+
+    
+        @keyframes marquee {
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(-50%); }
+        }
+        @keyframes marquee-reverse {
+            0% { transform: translateX(-50%); }
+            100% { transform: translateX(0%); }
+        }
+        .animate-marquee {
+            display: flex;
+            width: max-content;
+            animation: marquee 30s linear infinite;
+        }
+        .animate-marquee-reverse {
+            display: flex;
+            width: max-content;
+            animation: marquee-reverse 35s linear infinite;
+        }
+        .animate-marquee:hover, .animate-marquee-reverse:hover {
+            animation-play-state: paused;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #050508;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1f1f2e;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #CCFF00;
+        }
+        .glass-card {
+            background: rgba(15, 15, 19, 0.75);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .reveal-up {
+            opacity: 0;
+            transform: translateY(40px);
+        }
+        /* Custom Thunder Mouse Cursor Elements */
+        #custom-cursor {
+            pointer-events: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: transform 0.1s ease-out;
+        }
+        .thunder-particle {
+            position: fixed;
+            pointer-events: none;
+            z-index: 9998;
+            font-size: 14px;
+            animation: fadeOutSpark 0.6s linear forwards;
+        }
+        @keyframes fadeOutSpark {
+            0% {
+                opacity: 1;
+                transform: scale(1.2) translateY(0);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(0.3) translateY(20px) rotate(45deg);
+            }
+        }
+    </style>
+</head>
+<body class="bg-neon-dark text-gray-100 antialiased selection:bg-neon-lime selection:text-black relative">
+    <div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
+        <div class="absolute top-[10%] left-[15%] w-[450px] sm:w-[650px] h-[450px] sm:h-[650px] bg-neon-lime/20 blur-[120px] animate-blob-1"></div>
+        <div class="absolute top-[45%] right-[10%] w-[400px] sm:w-[600px] h-[400px] sm:h-[600px] bg-neon-cyan/20 blur-[130px] animate-blob-2"></div>
+        <div class="absolute bottom-[5%] left-[30%] w-[450px] sm:w-[700px] h-[450px] sm:h-[700px] bg-neon-magenta/15 blur-[150px] animate-blob-3"></div>
+    </div>
+
+    <div id="custom-cursor" class="hidden md:flex items-center justify-center w-8 h-8 rounded-full bg-neon-lime/20 border border-neon-lime text-neon-lime glow-lime text-xs">
+        <i class="fa-solid fa-bolt animate-bounce"></i>
+    </div>
+    <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-32 opacity-0 transition-all duration-400 bg-neon-lime text-black px-6 py-4 rounded-2xl font-extrabold shadow-2xl flex items-center space-x-3 border-2 border-white/20 text-sm sm:text-base">
+        <i class="fa-solid fa-bolt text-xl flex-shrink-0 animate-bounce"></i>
+        <span id="toast-message" class="truncate">Success! Welcome to NeonFit Elite.</span>
+    </div>
+    <div id="booking-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300">
+        <div id="booking-modal-content" class="glass-card w-full max-w-lg rounded-3xl p-6 sm:p-8 transform scale-95 transition-all duration-300 relative border border-neon-lime/30 glow-lime">
+            <button onclick="closeModal()" aria-label="Close modal" class="absolute top-6 right-6 text-gray-400 hover:text-neon-lime text-xl transition-colors cursor-pointer w-10 h-10 rounded-full bg-white/5 flex items-center justify-center">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="mb-6">
+                <span class="text-xs font-bold text-neon-lime uppercase tracking-widest bg-neon-lime/10 px-3.5 py-1.5 rounded-full border border-neon-lime/30">Instant Pass Reservation</span>
+                <h3 id="modal-title" class="text-2xl font-black text-white mt-3 uppercase tracking-tight">Book Session</h3>
+                <p id="modal-subtitle" class="text-gray-400 text-sm mt-1">Lock in your spot instantly with elite priority access.</p>
+            </div>
+            <form onsubmit="handleModalSubmit(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Full Name</label>
+                    <input type="text" id="modal-name" required placeholder="Alex Rivera" class="w-full bg-black/60 border border-neon-border rounded-xl px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-neon-lime transition-all text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Email Address</label>
+                    <input type="email" id="modal-email" required placeholder="alex@neonfit.com" class="w-full bg-black/60 border border-neon-border rounded-xl px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-neon-lime transition-all text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Preferred Time Slot</label>
+                    <select id="modal-time" class="w-full bg-black/60 border border-neon-border rounded-xl px-4 py-3 text-white focus:outline-none focus:border-neon-lime transition-all text-sm cursor-pointer">
+                        <option>Dawn Surge (06:00 AM)</option>
+                        <option>Midday Power (12:30 PM)</option>
+                        <option>Evening Beast Mode (06:00 PM)</option>
+                        <option>Midnight Grind (11:00 PM - 24/7)</option>
+                    </select>
+                </div>
+                <button type="submit" class="w-full bg-neon-lime text-black font-extrabold py-3.5 rounded-xl hover:bg-white transition-all duration-300 shadow-lg glow-lime text-base cursor-pointer mt-2 transform hover:scale-[1.02]">
+                    Confirm Reservation
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <nav id="navbar" class="fixed top-0 left-0 w-full z-40 transition-all duration-300 bg-neon-dark/80 backdrop-blur-xl border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+        
+            <a href="#home" class="flex items-center space-x-3 group">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-neon-lime to-neon-cyan p-0.5 shadow-lg glow-lime flex items-center justify-center transform group-hover:rotate-12 transition-transform duration-300">
+                    <div class="w-full h-full bg-neon-dark rounded-[10px] flex items-center justify-center text-neon-lime">
+                        <i class="fa-solid fa-bolt text-lg animate-pulse"></i>
+                    </div>
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-xl sm:text-2xl font-black tracking-tighter text-white uppercase leading-none">
+                        NEON<span class="text-neon-lime">FIT</span>
+                    </span>
+                    <span class="text-[9px] uppercase tracking-widest text-neon-cyan font-bold">Ultra Fitness</span>
+                </div>
+            </a>
+
+            <div class="hidden lg:flex items-center space-x-8 font-medium text-sm text-gray-300">
+                <a href="#home" class="hover:text-neon-lime transition-colors">Home</a>
+                <a href="#features" class="hover:text-neon-lime transition-colors">Perks</a>
+                <a href="#classes" class="hover:text-neon-lime transition-colors">Classes</a>
+                <a href="#trainers" class="hover:text-neon-lime transition-colors">Trainers</a>
+                <a href="#pricing" class="hover:text-neon-lime transition-colors">Pricing</a>
+                <a href="#reviews" class="hover:text-neon-lime transition-colors">Reviews</a>
+                <a href="#faq" class="hover:text-neon-lime transition-colors">FAQ</a>
+                <a href="#contact" class="hover:text-neon-lime transition-colors">Contact</a>
+            </div>
+
+           
+            <div class="hidden lg:block">
+                <a href="#pricing" class="bg-neon-lime text-black font-extrabold px-6 py-3 rounded-xl hover:bg-white transition-all duration-300 shadow-lg glow-lime text-sm inline-block transform hover:scale-105">
+                    Join VIP
+                </a>
+            </div>
+
+            
+            <button id="menu-toggle" aria-label="Toggle Navigation" class="lg:hidden text-2xl text-gray-300 hover:text-neon-lime p-2 focus:outline-none transition-colors">
+                <i id="menu-icon" class="fa-solid fa-bars transition-transform duration-300"></i>
+            </button>
+        </div>
+
+       
+        <div id="mobile-menu" class="lg:hidden max-h-0 overflow-hidden transition-all duration-300 ease-in-out glass-card border-b border-neon-border px-6">
+            <div class="py-6 space-y-4">
+                <a href="#home" class="block text-lg font-medium hover:text-neon-lime mobile-link transition-colors">Home</a>
+                <a href="#features" class="block text-lg font-medium hover:text-neon-lime mobile-link transition-colors">Perks</a>
+                <a href="#classes" class="block text-lg font-medium hover:text-neon-lime mobile-link transition-colors">Classes</a>
+                <a href="#trainers" class="block text-lg font-medium hover:text-neon-lime mobile-link transition-colors">Trainers</a>
+                <a href="#pricing" class="block text-lg font-medium hover:text-neon-lime mobile-link transition-colors">Pricing</a>
+                <a href="#reviews" class="block text-lg font-medium hover:text-neon-lime mobile-link transition-colors">Reviews</a>
+                <a href="#faq" class="block text-lg font-medium hover:text-neon-lime mobile-link transition-colors">FAQ</a>
+                <a href="#contact" class="block text-lg font-medium hover:text-neon-lime mobile-link transition-colors">Contact</a>
+                <div class="pt-2">
+                    <a href="#pricing" class="block text-center w-full bg-neon-lime text-black font-extrabold py-3.5 rounded-xl hover:bg-white transition-all shadow-lg mobile-link">Join VIP</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+       <section id="home" class="relative min-h-screen flex items-center justify-center pt-28 pb-20 overflow-hidden z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                      <div class="lg:col-span-7 space-y-6 text-center lg:text-left hero-text">
+                <div class="inline-flex items-center space-x-2 glass-card px-4 py-2 rounded-full border border-neon-lime/30">
+                    <span class="flex h-2.5 w-2.5 rounded-full bg-neon-lime animate-ping"></span>
+                    <span class="text-xs font-bold uppercase tracking-widest text-neon-lime">Next-Gen Hyper-Fitness 2026</span>
+                </div>
+                <h1 class="text-4xl sm:text-6xl xl:text-7xl font-black tracking-tight uppercase leading-none">
+                    Unleash Your <span class="text-transparent bg-clip-text bg-gradient-to-r from-neon-lime via-neon-cyan to-neon-magenta text-glow-lime">Ultimate</span> Physique
+                </h1>
+                <p class="text-gray-300 text-base sm:text-xl max-w-2xl mx-auto lg:mx-0 font-normal leading-relaxed">
+                    Break plateaus with biometric tracking, immersive strobe-lit classes, elite world-class coaches, and 24/7 uncompromised access.
+                </p>
+                <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
+                    <a href="#pricing" class="w-full sm:w-auto bg-neon-lime text-black font-extrabold px-8 py-4 rounded-xl hover:bg-white transition-all duration-300 text-center glow-lime flex items-center justify-center space-x-3 text-base transform hover:scale-105">
+                        <span>Claim Your Free Pass</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                    <a href="#classes" class="w-full sm:w-auto glass-card hover:border-neon-cyan text-white font-bold px-8 py-4 rounded-xl transition-all duration-300 text-center flex items-center justify-center space-x-3 text-base">
+                        <i class="fa-solid fa-play text-neon-cyan"></i>
+                        <span>Explore Sessions</span>
+                    </a>
+                </div>
+
+                <div class="grid grid-cols-3 gap-4 sm:gap-6 pt-8 border-t border-white/10 mt-8">
+                    <div>
+                        <h3 class="text-2xl sm:text-4xl font-black text-neon-lime">10K+</h3>
+                        <p class="text-[11px] sm:text-sm text-gray-400 uppercase tracking-wider mt-1">Elite Members</p>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl sm:text-4xl font-black text-neon-cyan">30+</h3>
+                        <p class="text-[11px] sm:text-sm text-gray-400 uppercase tracking-wider mt-1">Pro Coaches</p>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl sm:text-4xl font-black text-neon-magenta">99%</h3>
+                        <p class="text-[11px] sm:text-sm text-gray-400 uppercase tracking-wider mt-1">Goal Success</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-5 relative flex justify-center px-4 sm:px-0 hero-image">
+                <div class="relative w-full max-w-md aspect-[4/5] rounded-3xl overflow-hidden glass-card border-2 border-neon-lime/60 group shadow-2xl glow-lime animate-float-levitate">
+                    <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1200&auto=format&fit=crop" 
+                         onerror="this.src='https://placehold.co/600x800/121212/CCFF00?text=NEONFIT+ELITE'" 
+                         alt="Crystal Clear Gym Athlete" 
+                         class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-neon-dark via-transparent to-transparent opacity-80"></div>
+                    
+                    
+                    <div class="absolute bottom-5 left-5 right-5 glass-card p-4 rounded-2xl flex items-center space-x-4 border border-white/10 shadow-xl">
+                        <div class="w-12 h-12 rounded-xl bg-neon-lime/20 flex items-center justify-center text-neon-lime text-xl font-bold flex-shrink-0 border border-neon-lime/30">
+                            <i class="fa-solid fa-bolt"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-white text-sm sm:text-base">Biometric Tracking</h4>
+                            <p class="text-xs text-gray-400">Real-time heart rate & calorie metrics</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+    <div class="py-6 bg-neon-lime text-black overflow-hidden whitespace-nowrap transform -rotate-1 shadow-2xl relative z-20">
+        <div class="animate-marquee flex items-center space-x-12 text-lg sm:text-2xl font-black tracking-wider uppercase">
+            <span>⚡ FORGE YOUR DESTINY</span>
+            <span>•</span>
+            <span>UNLIMITED 24/7 ACCESS</span>
+            <span>•</span>
+            <span>STATE-OF-THE-ART GEAR</span>
+            <span>•</span>
+            <span>ELITE CHAMPION COACHES</span>
+            <span>•</span>
+            <span>HIGH-INTENSITY STROBE SESSIONS</span>
+            <span>•</span>
+            <span>⚡ FORGE YOUR DESTINY</span>
+            <span>•</span>
+            <span>UNLIMITED 24/7 ACCESS</span>
+            <span>•</span>
+            <span>STATE-OF-THE-ART GEAR</span>
+            <span>•</span>
+            <span>ELITE CHAMPION COACHES</span>
+            <span>•</span>
+            <span>HIGH-INTENSITY STROBE SESSIONS</span>
+        </div>
+    </div>
+
+        <section id="features" class="py-24 bg-neon-dark/9opath relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 reveal-up">
+                <span class="text-neon-cyan text-xs font-bold uppercase tracking-widest bg-neon-cyan/10 px-3.5 py-1.5 rounded-full border border-neon-cyan/30">Why NeonFit</span>
+                <h2 class="text-3xl sm:text-5xl font-black uppercase tracking-tight mt-4">Engineered For Peak Performance</h2>
+                <p class="text-gray-400 mt-3 text-sm sm:text-base">Experience uncompromising quality across every square foot of our futuristic facility.</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+    
+                <div class="reveal-up glass-card rounded-2xl p-6 sm:p-8 hover:border-neon-lime transition-all duration-300 group hover:-translate-y-2">
+                    <div class="w-14 h-14 rounded-xl bg-neon-lime/10 text-neon-lime flex items-center justify-center text-2xl mb-6 group-hover:bg-neon-lime group-hover:text-black transition-all border border-neon-lime/20">
+                        <i class="fa-solid fa-dumbbell"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-white">Imported Gear</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Custom calibrated strength machines and Olympic lifting platforms inspected daily.</p>
+                </div>
+                
+                <div class="reveal-up glass-card rounded-2xl p-6 sm:p-8 hover:border-neon-cyan transition-all duration-300 group hover:-translate-y-2">
+                    <div class="w-14 h-14 rounded-xl bg-neon-cyan/10 text-neon-cyan flex items-center justify-center text-2xl mb-6 group-hover:bg-neon-cyan group-hover:text-black transition-all border border-neon-cyan/20">
+                        <i class="fa-solid fa-user-shield"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-white">Elite Coaches</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Certified IFBB pros and sports scientists dedicated to perfecting your biomechanics.</p>
+                </div>
+                
+                <div class="reveal-up glass-card rounded-2xl p-6 sm:p-8 hover:border-neon-magenta transition-all duration-300 group hover:-translate-y-2">
+                    <div class="w-14 h-14 rounded-xl bg-neon-magenta/10 text-neon-magenta flex items-center justify-center text-2xl mb-6 group-hover:bg-neon-magenta group-hover:text-black transition-all border border-neon-magenta/20">
+                        <i class="fa-solid fa-utensils"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-white">Macro Nutrition</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Personalized meal planning and organic shake bars engineered for rapid recovery.</p>
+                </div>
+                
+                <div class="reveal-up glass-card rounded-2xl p-6 sm:p-8 hover:border-neon-lime transition-all duration-300 group hover:-translate-y-2">
+                    <div class="w-14 h-14 rounded-xl bg-neon-lime/10 text-neon-lime flex items-center justify-center text-2xl mb-6 group-hover:bg-neon-lime group-hover:text-black transition-all border border-neon-lime/20">
+                        <i class="fa-solid fa-clock"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-white">24/7 Biometric Access</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Train on your own schedule with secure face-recognition and keycard entry.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+    <section id="classes" class="py-24 bg-[#07070a]/90 relative z-10 border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-10 sm:mb-12 reveal-up">
+                <span class="text-neon-lime text-xs font-bold uppercase tracking-widest bg-neon-lime/10 px-3.5 py-1.5 rounded-full border border-neon-lime/30">High Energy Sessions</span>
+                <h2 class="text-3xl sm:text-5xl font-black uppercase tracking-tight mt-4">Immersive Class Schedule</h2>
+                <p class="text-gray-400 mt-3 text-sm sm:text-base">Filter through our high-octane sessions and reserve your spot instantly.</p>
+            </div>
+
+            
+            <div class="flex flex-wrap justify-center gap-2.5 sm:gap-3 mb-12 reveal-up">
+                <button onclick="filterClasses('all', event)" class="class-filter-btn active-filter bg-neon-lime text-black font-extrabold px-5 py-2.5 rounded-xl transition-all shadow-lg text-sm sm:text-base cursor-pointer">All Classes</button>
+                <button onclick="filterClasses('yoga', event)" class="class-filter-btn glass-card text-gray-300 hover:border-neon-lime font-bold px-5 py-2.5 rounded-xl transition-all text-sm sm:text-base cursor-pointer">Yoga & Mobility</button>
+                <button onclick="filterClasses('hiit', event)" class="class-filter-btn glass-card text-gray-300 hover:border-neon-lime font-bold px-5 py-2.5 rounded-xl transition-all text-sm sm:text-base cursor-pointer">HIIT Burn</button>
+                <button onclick="filterClasses('strength', event)" class="class-filter-btn glass-card text-gray-300 hover:border-neon-lime font-bold px-5 py-2.5 rounded-xl transition-all text-sm sm:text-base cursor-pointer">Strength</button>
+                <button onclick="filterClasses('crossfit', event)" class="class-filter-btn glass-card text-gray-300 hover:border-neon-lime font-bold px-5 py-2.5 rounded-xl transition-all text-sm sm:text-base cursor-pointer">CrossFit WOD</button>
+                <button onclick="filterClasses('cycling', event)" class="class-filter-btn glass-card text-gray-300 hover:border-neon-lime font-bold px-5 py-2.5 rounded-xl transition-all text-sm sm:text-base cursor-pointer">Neon Cycle</button>
+            </div>
+
+            
+            <div id="classes-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+               
+                <div class="class-card reveal-up glass-card rounded-2xl overflow-hidden group border border-white/10 hover:border-neon-lime transition-all" data-category="strength">
+                    <div class="relative h-60 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1517838277536-f5f99be501cd?q=80&w=1000&auto=format&fit=crop" 
+                             onerror="this.src='https://placehold.co/600x400/121212/CCFF00?text=Strength'" 
+                             alt="Advanced Powerlifting" 
+                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute top-4 right-4 bg-black/80 backdrop-blur-md px-3.5 py-1.5 rounded-full text-xs font-black text-neon-lime border border-neon-lime/30">Strength</div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between text-xs text-gray-400 mb-2 font-medium">
+                            <span><i class="fa-solid fa-clock mr-1 text-neon-lime"></i> 60 Mins</span>
+                            <span><i class="fa-solid fa-fire mr-1 text-neon-magenta"></i> 650 Kcal</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">Advanced Powerlifting</h3>
+                        <p class="text-gray-400 text-sm mb-6 leading-relaxed">Master compound squat, bench, and deadlift mechanics under expert supervision.</p>
+                        <button onclick="openModal('Advanced Powerlifting')" class="w-full glass-card hover:bg-neon-lime hover:text-black font-bold py-3.5 rounded-xl transition-all text-sm cursor-pointer border border-white/10 hover:border-neon-lime">
+                            Reserve Spot
+                        </button>
+                    </div>
+                </div>
+
+               
+                <div class="class-card reveal-up glass-card rounded-2xl overflow-hidden group border border-white/10 hover:border-neon-cyan transition-all" data-category="hiit">
+                    <div class="relative h-60 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1549060279-7e168fcee0c2?q=80&w=1000&auto=format&fit=crop" 
+                             onerror="this.src='https://placehold.co/600x400/121212/00F0FF?text=HIIT'" 
+                             alt="Metabolic Burner" 
+                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute top-4 right-4 bg-black/80 backdrop-blur-md px-3.5 py-1.5 rounded-full text-xs font-black text-neon-cyan border border-neon-cyan/30">HIIT</div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between text-xs text-gray-400 mb-2 font-medium">
+                            <span><i class="fa-solid fa-clock mr-1 text-neon-cyan"></i> 45 Mins</span>
+                            <span><i class="fa-solid fa-fire mr-1 text-neon-magenta"></i> 850 Kcal</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">Metabolic Burner</h3>
+                        <p class="text-gray-400 text-sm mb-6 leading-relaxed">Torch stubborn body fat and elevate cardiovascular endurance with extreme intervals.</p>
+                        <button onclick="openModal('Metabolic Burner')" class="w-full glass-card hover:bg-neon-cyan hover:text-black font-bold py-3.5 rounded-xl transition-all text-sm cursor-pointer border border-white/10 hover:border-neon-cyan">
+                            Reserve Spot
+                        </button>
+                    </div>
+                </div>
+
+                
+                <div class="class-card reveal-up glass-card rounded-2xl overflow-hidden group border border-white/10 hover:border-neon-magenta transition-all" data-category="yoga">
+                    <div class="relative h-60 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=1000&auto=format&fit=crop" 
+                             onerror="this.src='https://placehold.co/600x400/121212/FF007F?text=Yoga'" 
+                             alt="Vinyasa & Mobility" 
+                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute top-4 right-4 bg-black/80 backdrop-blur-md px-3.5 py-1.5 rounded-full text-xs font-black text-neon-magenta border border-neon-magenta/30">Yoga</div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between text-xs text-gray-400 mb-2 font-medium">
+                            <span><i class="fa-solid fa-clock mr-1 text-neon-magenta"></i> 75 Mins</span>
+                            <span><i class="fa-solid fa-fire mr-1 text-neon-magenta"></i> 320 Kcal</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">Vinyasa & Mobility Flow</h3>
+                        <p class="text-gray-400 text-sm mb-6 leading-relaxed">Restore tight joints, enhance mental clarity, and bulletproof your core stability.</p>
+                        <button onclick="openModal('Vinyasa & Mobility Flow')" class="w-full glass-card hover:bg-neon-magenta hover:text-white font-bold py-3.5 rounded-xl transition-all text-sm cursor-pointer border border-white/10 hover:border-neon-magenta">
+                            Reserve Spot
+                        </button>
+                    </div>
+                </div>
+
+                
+                <div class="class-card reveal-up glass-card rounded-2xl overflow-hidden group border border-white/10 hover:border-neon-lime transition-all" data-category="crossfit">
+                    <div class="relative h-60 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1534367507873-d2d7e24c797f?q=80&w=1000&auto=format&fit=crop" 
+                             onerror="this.src='https://placehold.co/600x400/121212/CCFF00?text=CrossFit'" 
+                             alt="Extreme WOD" 
+                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute top-4 right-4 bg-black/80 backdrop-blur-md px-3.5 py-1.5 rounded-full text-xs font-black text-neon-lime border border-neon-lime/30">CrossFit</div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between text-xs text-gray-400 mb-2 font-medium">
+                            <span><i class="fa-solid fa-clock mr-1 text-neon-lime"></i> 60 Mins</span>
+                            <span><i class="fa-solid fa-fire mr-1 text-neon-magenta"></i> 800 Kcal</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">Extreme WOD</h3>
+                        <p class="text-gray-400 text-sm mb-6 leading-relaxed">Constantly varied functional movements executed at maximum intensity.</p>
+                        <button onclick="openModal('Extreme WOD')" class="w-full glass-card hover:bg-neon-lime hover:text-black font-bold py-3.5 rounded-xl transition-all text-sm cursor-pointer border border-white/10 hover:border-neon-lime">
+                            Reserve Spot
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Class 5 -->
+                <div class="class-card reveal-up glass-card rounded-2xl overflow-hidden group border border-white/10 hover:border-neon-cyan transition-all" data-category="cycling">
+                    <div class="relative h-60 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?q=80&w=1000&auto=format&fit=crop" 
+                             onerror="this.src='https://placehold.co/600x400/121212/00F0FF?text=Cycling'" 
+                             alt="Neon Cycle Beats" 
+                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute top-4 right-4 bg-black/80 backdrop-blur-md px-3.5 py-1.5 rounded-full text-xs font-black text-neon-cyan border border-neon-cyan/30">Cycling</div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between text-xs text-gray-400 mb-2 font-medium">
+                            <span><i class="fa-solid fa-clock mr-1 text-neon-cyan"></i> 45 Mins</span>
+                            <span><i class="fa-solid fa-fire mr-1 text-neon-magenta"></i> 700 Kcal</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">Neon Cycle Beats</h3>
+                        <p class="text-gray-400 text-sm mb-6 leading-relaxed">Immersive rhythmic indoor cycling powered by booming bass and strobe lights.</p>
+                        <button onclick="openModal('Neon Cycle Beats')" class="w-full glass-card hover:bg-neon-cyan hover:text-black font-bold py-3.5 rounded-xl transition-all text-sm cursor-pointer border border-white/10 hover:border-neon-cyan">
+                            Reserve Spot
+                        </button>
+                    </div>
+                </div>
+
+                
+                <div class="class-card reveal-up glass-card rounded-2xl overflow-hidden group border border-white/10 hover:border-neon-lime transition-all" data-category="strength">
+                    <div class="relative h-60 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?q=80&w=1000&auto=format&fit=crop" 
+                             onerror="this.src='https://placehold.co/600x400/121212/CCFF00?text=Strength'" 
+                             alt="Functional Bodybuilding" 
+                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute top-4 right-4 bg-black/80 backdrop-blur-md px-3.5 py-1.5 rounded-full text-xs font-black text-neon-lime border border-neon-lime/30">Strength</div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between text-xs text-gray-400 mb-2 font-medium">
+                            <span><i class="fa-solid fa-clock mr-1 text-neon-lime"></i> 60 Mins</span>
+                            <span><i class="fa-solid fa-fire mr-1 text-neon-magenta"></i> 580 Kcal</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">Functional Bodybuilding</h3>
+                        <p class="text-gray-400 text-sm mb-6 leading-relaxed">Sculpt aesthetic muscle symmetry while bulletproofing joints against injury.</p>
+                        <button onclick="openModal('Functional Bodybuilding')" class="w-full glass-card hover:bg-neon-lime hover:text-black font-bold py-3.5 rounded-xl transition-all text-sm cursor-pointer border border-white/10 hover:border-neon-lime">
+                            Reserve Spot
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="py-6 bg-neon-cyan text-black overflow-hidden whitespace-nowrap transform rotate-1 shadow-2xl relative z-20">
+        <div class="animate-marquee-reverse flex items-center space-x-12 text-lg sm:text-2xl font-black tracking-wider uppercase">
+            <span>🔥 NO EXCUSES JUST RESULTS</span>
+            <span>•</span>
+            <span>STATE OF THE ART FACILITIES</span>
+            <span>•</span>
+            <span>JOIN THE ELITE REVOLUTION</span>
+            <span>•</span>
+            <span>BIOMETRIC PROGRESS TRACKING</span>
+            <span>•</span>
+            <span>🔥 NO EXCUSES JUST RESULTS</span>
+            <span>•</span>
+            <span>STATE OF THE ART FACILITIES</span>
+            <span>•</span>
+            <span>JOIN THE ELITE REVOLUTION</span>
+            <span>•</span>
+            <span>BIOMETRIC PROGRESS TRACKING</span>
+        </div>
+    </div>
+
+   
+    <section id="trainers" class="py-24 bg-neon-dark/90 relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 reveal-up">
+                <span class="text-neon-magenta text-xs font-bold uppercase tracking-widest bg-neon-magenta/10 px-3.5 py-1.5 rounded-full border border-neon-magenta/30">World Class Guidance</span>
+                <h2 class="text-3xl sm:text-5xl font-black uppercase tracking-tight mt-4">Meet Our Elite Trainers</h2>
+                <p class="text-gray-400 mt-3 text-sm sm:text-base">Train directly under championship veterans and certified sports scientists.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+               
+                <div class="reveal-up glass-card rounded-2xl overflow-hidden group border border-white/10 hover:border-neon-lime transition-all">
+                    <div class="relative h-80 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1567013127542-490d757e51fc?q=80&w=1000&auto=format&fit=crop" 
+                             onerror="this.src='https://placehold.co/600x600/121212/CCFF00?text=Trainer'" 
+                             alt="Alex Vance" 
+                             class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-neon-dark via-transparent to-transparent"></div>
+                    </div>
+                    <div class="p-6 relative -mt-12">
+                        <div class="glass-card rounded-2xl p-6 border border-white/10 shadow-2xl">
+                            <span class="text-xs font-bold text-neon-lime uppercase tracking-wider">Head Strength Coach</span>
+                            <h3 class="text-2xl font-black text-white mt-1 mb-2">Alex Vance</h3>
+                            <p class="text-gray-400 text-sm mb-4 leading-relaxed">Former IFBB Pro with 12+ years optimizing physical transformations.</p>
+                            <div class="flex items-center space-x-3 text-gray-400">
+                                <a href="#" class="w-10 h-10 rounded-xl glass-card flex items-center justify-center hover:bg-neon-lime hover:text-black transition-all"><i class="fa-brands fa-instagram"></i></a>
+                                <a href="#" class="w-10 h-10 rounded-xl glass-card flex items-center justify-center hover:bg-neon-lime hover:text-black transition-all"><i class="fa-brands fa-twitter"></i></a>
+                                <a href="#" class="w-10 h-10 rounded-xl glass-card flex items-center justify-center hover:bg-neon-lime hover:text-black transition-all"><i class="fa-brands fa-linkedin-in"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+               
+                <div class="reveal-up glass-card rounded-2xl overflow-hidden group border border-white/10 hover:border-neon-cyan transition-all">
+                    <div class="relative h-80 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1594381898411-846e7d193883?q=80&w=1000&auto=format&fit=crop" 
+                             onerror="this.src='https://placehold.co/600x600/121212/00F0FF?text=Trainer'" 
+                             alt="Elena Rostova" 
+                             class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-neon-dark via-transparent to-transparent"></div>
+                    </div>
+                    <div class="p-6 relative -mt-12">
+                        <div class="glass-card rounded-2xl p-6 border border-white/10 shadow-2xl">
+                            <span class="text-xs font-bold text-neon-cyan uppercase tracking-wider">HIIT & Conditioning</span>
+                            <h3 class="text-2xl font-black text-white mt-1 mb-2">Elena Rostova</h3>
+                            <p class="text-gray-400 text-sm mb-4 leading-relaxed">CrossFit regional champion specializing in explosive conditioning.</p>
+                            <div class="flex items-center space-x-3 text-gray-400">
+                                <a href="#" class="w-10 h-10 rounded-xl glass-card flex items-center justify-center hover:bg-neon-cyan hover:text-black transition-all"><i class="fa-brands fa-instagram"></i></a>
+                                <a href="#" class="w-10 h-10 rounded-xl glass-card flex items-center justify-center hover:bg-neon-cyan hover:text-black transition-all"><i class="fa-brands fa-twitter"></i></a>
+                                <a href="#" class="w-10 h-10 rounded-xl glass-card flex items-center justify-center hover:bg-neon-cyan hover:text-black transition-all"><i class="fa-brands fa-youtube"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Trainer 3 -->
+                <div class="reveal-up glass-card rounded-2xl overflow-hidden group border border-white/10 hover:border-neon-magenta transition-all">
+                    <div class="relative h-80 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=1000&auto=format&fit=crop" 
+                             onerror="this.src='https://placehold.co/600x600/121212/FF007F?text=Trainer'" 
+                             alt="Marcus Thorne" 
+                             class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-neon-dark via-transparent to-transparent"></div>
+                    </div>
+                    <div class="p-6 relative -mt-12">
+                        <div class="glass-card rounded-2xl p-6 border border-white/10 shadow-2xl">
+                            <span class="text-xs font-bold text-neon-magenta uppercase tracking-wider">Mobility & Yoga</span>
+                            <h3 class="text-2xl font-black text-white mt-1 mb-2">Marcus Thorne</h3>
+                            <p class="text-gray-400 text-sm mb-4 leading-relaxed">Dedicated recovery expert focused on breathwork and joint bulletproofing.</p>
+                            <div class="flex items-center space-x-3 text-gray-400">
+                                <a href="#" class="w-10 h-10 rounded-xl glass-card flex items-center justify-center hover:bg-neon-magenta hover:text-white transition-all"><i class="fa-brands fa-instagram"></i></a>
+                                <a href="#" class="w-10 h-10 rounded-xl glass-card flex items-center justify-center hover:bg-neon-magenta hover:text-white transition-all"><i class="fa-brands fa-facebook-f"></i></a>
+                                <a href="#" class="w-10 h-10 rounded-xl glass-card flex items-center justify-center hover:bg-neon-magenta hover:text-white transition-all"><i class="fa-brands fa-tiktok"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Membership Pricing Tiers -->
+    <section id="pricing" class="py-24 bg-[#07070a]/90 relative z-10 border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-10 sm:mb-12 reveal-up">
+                <span class="text-neon-lime text-xs font-bold uppercase tracking-widest bg-neon-lime/10 px-3.5 py-1.5 rounded-full border border-neon-lime/30">Flexible Investment</span>
+                <h2 class="text-3xl sm:text-5xl font-black uppercase tracking-tight mt-4">Membership Tiers</h2>
+                <p class="text-gray-400 mt-3 text-sm sm:text-base">Toggle annual billing and instantly save 20% on all plans.</p>
+            </div>
+
+            <!-- Billing Toggle -->
+            <div class="flex items-center justify-center space-x-4 mb-16 reveal-up">
+                <span id="monthly-label" class="font-bold text-white text-sm sm:text-base">Monthly Billing</span>
+                <button id="pricing-toggle" onclick="togglePricing()" aria-label="Toggle annual billing" class="w-16 h-8 glass-card border border-white/20 rounded-full p-1 relative transition-colors focus:outline-none cursor-pointer">
+                    <div id="toggle-circle" class="w-6 h-6 bg-neon-lime rounded-full transition-transform duration-300 transform translate-x-0 shadow-lg"></div>
+                </button>
+                <span id="annual-label" class="font-medium text-gray-400 text-sm sm:text-base">Annual Billing <span class="bg-neon-magenta/20 text-neon-magenta text-xs font-bold px-2 py-0.5 rounded ml-1 border border-neon-magenta/30">Save 20%</span></span>
+            </div>
+
+            <!-- Pricing Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
+                <!-- Starter Plan -->
+                <div class="reveal-up glass-card rounded-3xl p-6 sm:p-8 flex flex-col justify-between border border-white/10 hover:border-gray-400 transition-all">
+                    <div>
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="text-xl font-bold uppercase tracking-wider text-gray-300">Starter</h3>
+                            <span class="text-xs font-bold text-gray-400 glass-card px-3 py-1 rounded-full border border-white/10">Casual</span>
+                        </div>
+                        <div class="mb-6">
+                            <span class="text-4xl sm:text-5xl font-black price-amount text-white" data-monthly="49" data-annual="39">$49</span>
+                            <span class="text-gray-400 text-sm price-duration">/month</span>
+                        </div>
+                        <p class="text-gray-400 text-sm mb-8 leading-relaxed">Standard access to our world-class gym floor and locker facilities.</p>
+                        <ul class="space-y-4 mb-8 text-sm text-gray-300">
+                            <li class="flex items-center"><i class="fa-solid fa-check text-neon-lime mr-3"></i> Full Gym Floor Access</li>
+                            <li class="flex items-center"><i class="fa-solid fa-check text-neon-lime mr-3"></i> Locker Room & Showers</li>
+                            <li class="flex items-center"><i class="fa-solid fa-check text-neon-lime mr-3"></i> Standard Fitness Assessment</li>
+                            <li class="flex items-center text-gray-600"><i class="fa-solid fa-xmark mr-3"></i> Unlimited Group Classes</li>
+                            <li class="flex items-center text-gray-600"><i class="fa-solid fa-xmark mr-3"></i> Personalized Nutrition Coaching</li>
+                        </ul>
+                    </div>
+                    <button onclick="selectPlan('Starter')" class="w-full glass-card hover:bg-neon-lime hover:text-black font-bold py-4 rounded-xl transition-all text-white text-sm cursor-pointer border border-white/10 hover:border-neon-lime">
+                        Choose Starter
+                    </button>
+                </div>
+
+                <!-- Pro Athlete (Featured) -->
+                <div class="reveal-up glass-card rounded-3xl p-6 sm:p-8 flex flex-col justify-between border-2 border-neon-lime glow-lime lg:-translate-y-4 relative">
+                    <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-neon-lime text-black font-extrabold text-xs px-4 py-1.5 rounded-full uppercase tracking-wider shadow-lg">
+                        Most Popular
+                    </div>
+                    <div>
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="text-xl font-bold uppercase tracking-wider text-neon-lime">Pro Athlete</h3>
+                            <span class="text-xs font-bold text-black bg-neon-lime px-3 py-1 rounded-full">All-Access</span>
+                        </div>
+                        <div class="mb-6">
+                            <span class="text-4xl sm:text-5xl font-black price-amount text-white" data-monthly="89" data-annual="71">$89</span>
+                            <span class="text-gray-400 text-sm price-duration">/month</span>
+                        </div>
+                        <p class="text-gray-400 text-sm mb-8 leading-relaxed">Designed for serious enthusiasts looking for unlimited classes and rapid gains.</p>
+                        <ul class="space-y-4 mb-8 text-sm text-gray-200">
+                            <li class="flex items-center"><i class="fa-solid fa-check text-neon-lime mr-3"></i> 24/7 Priority Gym Access</li>
+                            <li class="flex items-center"><i class="fa-solid fa-check text-neon-lime mr-3"></i> Unlimited Group Classes (Yoga, HIIT, etc.)</li>
+                            <li class="flex items-center"><i class="fa-solid fa-check text-neon-lime mr-3"></i> Free Guest Passes (2/mo)</li>
+                            <li class="flex items-center"><i class="fa-solid fa-check text-neon-lime mr-3"></i> Custom Nutrition & Macro Plan</li>
+                            <li class="flex items-center text-gray-600"><i class="fa-solid fa-xmark mr-3"></i> 1-on-1 Personal Training</li>
+                        </ul>
+                    </div>
+                    <button onclick="selectPlan('Pro Athlete')" class="w-full bg-neon-lime text-black font-extrabold py-4 rounded-xl hover:bg-white transition-all shadow-lg text-sm cursor-pointer">
+                        Choose Pro Athlete
+                    </button>
+                </div>
+
+                <!-- Elite VIP Plan -->
+                <div class="reveal-up glass-card rounded-3xl p-6 sm:p-8 flex flex-col justify-between border border-white/10 hover:border-neon-cyan transition-all">
+                    <div>
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="text-xl font-bold uppercase tracking-wider text-neon-cyan">Elite VIP</h3>
+                            <span class="text-xs font-bold text-neon-cyan bg-neon-cyan/10 px-3 py-1 rounded-full border border-neon-cyan/30">Ultimate</span>
+                        </div>
+                        <div class="mb-6">
+                            <span class="text-4xl sm:text-5xl font-black price-amount text-white" data-monthly="149" data-annual="119">$149</span>
+                            <span class="text-gray-400 text-sm price-duration">/month</span>
+                        </div>
+                        <p class="text-gray-400 text-sm mb-8 leading-relaxed">The complete VIP experience with private sauna, cold plunge, and dedicated coach.</p>
+                        <ul class="space-y-4 mb-8 text-sm text-gray-300">
+                            <li class="flex items-center"><i class="fa-solid fa-check text-neon-cyan mr-3"></i> All Pro Athlete Benefits</li>
+                            <li class="flex items-center"><i class="fa-solid fa-check text-neon-cyan mr-3"></i> 4x 1-on-1 Personal Training Sessions</li>
+                            <li class="flex items-center"><i class="fa-solid fa-check text-neon-cyan mr-3"></i> Infrared Sauna & Cold Plunge</li>
+                            <li class="flex items-center"><i class="fa-solid fa-check text-neon-cyan mr-3"></i> Dedicated Locker & Laundry Service</li>
+                            <li class="flex items-center"><i class="fa-solid fa-check text-neon-cyan mr-3"></i> VIP Lounge & Protein Bar Access</li>
+                        </ul>
+                    </div>
+                    <button onclick="selectPlan('Elite VIP')" class="w-full glass-card hover:bg-neon-cyan hover:text-black font-bold py-4 rounded-xl transition-all text-white text-sm cursor-pointer border border-white/10 hover:border-neon-cyan">
+                        Choose Elite VIP
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stunning Continuous Infinite Marquee Reviews Section -->
+    <section id="reviews" class="py-24 bg-neon-dark/90 relative z-10 overflow-hidden border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
+            <div class="text-center max-w-3xl mx-auto reveal-up">
+                <span class="text-neon-lime text-xs font-bold uppercase tracking-widest bg-neon-lime/10 px-3.5 py-1.5 rounded-full border border-neon-lime/30">Success Stories</span>
+                <h2 class="text-3xl sm:text-5xl font-black uppercase tracking-tight mt-4">Wall Of Transformations</h2>
+                <p class="text-gray-400 mt-3 text-sm sm:text-base">Hover over any card to pause and read authentic experiences from our community.</p>
+            </div>
+        </div>
+
+        <!-- Marquee Container -->
+        <div class="relative w-full overflow-hidden py-4">
+            <!-- Fade Left & Right Gradients -->
+            <div class="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-neon-dark to-transparent z-10 pointer-events-none"></div>
+            <div class="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-neon-dark to-transparent z-10 pointer-events-none"></div>
+
+            <div class="animate-marquee flex space-x-6">
+                <!-- Review Card 1 -->
+                <div class="glass-card rounded-3xl p-6 sm:p-8 flex flex-col justify-between border border-white/10 hover:border-neon-lime transition-all w-[340px] sm:w-[400px] flex-shrink-0 shadow-xl">
+                    <div>
+                        <div class="flex items-center space-x-1 text-amber-400 mb-4 text-sm">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                        <p class="text-gray-300 text-sm sm:text-base leading-relaxed mb-6 font-normal">
+                            "Lost 30 pounds of body fat and added 10lbs of lean muscle in 4 months. The strobe-lit HIIT classes and trainers are completely next level."
+                        </p>
+                    </div>
+                    <div class="flex items-center space-x-4 pt-4 border-t border-white/10">
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200&auto=format&fit=crop" onerror="this.src='https://placehold.co/100x100/121212/CCFF00?text=User'" alt="Sarah Jenkins" class="w-12 h-12 rounded-full object-cover border border-neon-lime flex-shrink-0">
+                        <div>
+                            <h4 class="font-bold text-white text-sm">Sarah Jenkins</h4>
+                            <p class="text-xs text-neon-lime font-medium">Pro Athlete Member</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review Card 2 -->
+                <div class="glass-card rounded-3xl p-6 sm:p-8 flex flex-col justify-between border border-white/10 hover:border-neon-cyan transition-all w-[340px] sm:w-[400px] flex-shrink-0 shadow-xl">
+                    <div>
+                        <div class="flex items-center space-x-1 text-amber-400 mb-4 text-sm">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                        <p class="text-gray-300 text-sm sm:text-base leading-relaxed mb-6 font-normal">
+                            "The 24/7 access is a lifesaver for my erratic work schedule. Impeccably maintained equipment and zero wait times for squat racks."
+                        </p>
+                    </div>
+                    <div class="flex items-center space-x-4 pt-4 border-t border-white/10">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200&auto=format&fit=crop" onerror="this.src='https://placehold.co/100x100/121212/00F0FF?text=User'" alt="David Miller" class="w-12 h-12 rounded-full object-cover border border-neon-cyan flex-shrink-0">
+                        <div>
+                            <h4 class="font-bold text-white text-sm">David Miller</h4>
+                            <p class="text-xs text-neon-cyan font-medium">Elite VIP Member</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review Card 3 -->
+                <div class="glass-card rounded-3xl p-6 sm:p-8 flex flex-col justify-between border border-white/10 hover:border-neon-magenta transition-all w-[340px] sm:w-[400px] flex-shrink-0 shadow-xl">
+                    <div>
+                        <div class="flex items-center space-x-1 text-amber-400 mb-4 text-sm">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                        <p class="text-gray-300 text-sm sm:text-base leading-relaxed mb-6 font-normal">
+                            "The community energy is unreal. Instructors push you past mental barriers you didn't know you had. My stamina has skyrocketed."
+                        </p>
+                    </div>
+                    <div class="flex items-center space-x-4 pt-4 border-t border-white/10">
+                        <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=200&auto=format&fit=crop" onerror="this.src='https://placehold.co/100x100/121212/FF007F?text=User'" alt="Jessica Wong" class="w-12 h-12 rounded-full object-cover border border-neon-magenta flex-shrink-0">
+                        <div>
+                            <h4 class="font-bold text-white text-sm">Jessica Wong</h4>
+                            <p class="text-xs text-neon-magenta font-medium">Starter Member</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review Card 4 -->
+                <div class="glass-card rounded-3xl p-6 sm:p-8 flex flex-col justify-between border border-white/10 hover:border-neon-lime transition-all w-[340px] sm:w-[400px] flex-shrink-0 shadow-xl">
+                    <div>
+                        <div class="flex items-center space-x-1 text-amber-400 mb-4 text-sm">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                        <p class="text-gray-300 text-sm sm:text-base leading-relaxed mb-6 font-normal">
+                            "The infrared sauna and cold plunge after heavy leg days are game changers. My recovery time has been cut in half!"
+                        </p>
+                    </div>
+                    <div class="flex items-center space-x-4 pt-4 border-t border-white/10">
+                        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=200&auto=format&fit=crop" onerror="this.src='https://placehold.co/100x100/121212/CCFF00?text=User'" alt="Liam O'Connor" class="w-12 h-12 rounded-full object-cover border border-neon-lime flex-shrink-0">
+                        <div>
+                            <h4 class="font-bold text-white text-sm">Liam O'Connor</h4>
+                            <p class="text-xs text-neon-lime font-medium">Elite VIP Member</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review Card 5 (Duplicate for seamless infinite loop) -->
+                <div class="glass-card rounded-3xl p-6 sm:p-8 flex flex-col justify-between border border-white/10 hover:border-neon-lime transition-all w-[340px] sm:w-[400px] flex-shrink-0 shadow-xl">
+                    <div>
+                        <div class="flex items-center space-x-1 text-amber-400 mb-4 text-sm">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                        <p class="text-gray-300 text-sm sm:text-base leading-relaxed mb-6 font-normal">
+                            "Lost 30 pounds of body fat and added 10lbs of lean muscle in 4 months. The strobe-lit HIIT classes and trainers are completely next level."
+                        </p>
+                    </div>
+                    <div class="flex items-center space-x-4 pt-4 border-t border-white/10">
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200&auto=format&fit=crop" onerror="this.src='https://placehold.co/100x100/121212/CCFF00?text=User'" alt="Sarah Jenkins" class="w-12 h-12 rounded-full object-cover border border-neon-lime flex-shrink-0">
+                        <div>
+                            <h4 class="font-bold text-white text-sm">Sarah Jenkins</h4>
+                            <p class="text-xs text-neon-lime font-medium">Pro Athlete Member</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review Card 6 (Duplicate) -->
+                <div class="glass-card rounded-3xl p-6 sm:p-8 flex flex-col justify-between border border-white/10 hover:border-neon-cyan transition-all w-[340px] sm:w-[400px] flex-shrink-0 shadow-xl">
+                    <div>
+                        <div class="flex items-center space-x-1 text-amber-400 mb-4 text-sm">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                        <p class="text-gray-300 text-sm sm:text-base leading-relaxed mb-6 font-normal">
+                            "The 24/7 access is a lifesaver for my erratic work schedule. Impeccably maintained equipment and zero wait times for squat racks."
+                        </p>
+                    </div>
+                    <div class="flex items-center space-x-4 pt-4 border-t border-white/10">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200&auto=format&fit=crop" onerror="this.src='https://placehold.co/100x100/121212/00F0FF?text=User'" alt="David Miller" class="w-12 h-12 rounded-full object-cover border border-neon-cyan flex-shrink-0">
+                        <div>
+                            <h4 class="font-bold text-white text-sm">David Miller</h4>
+                            <p class="text-xs text-neon-cyan font-medium">Elite VIP Member</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Accordion Section -->
+    <section id="faq" class="py-24 bg-[#07070a]/90 relative z-10 border-t border-white/5">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 reveal-up">
+                <span class="text-neon-cyan text-xs font-bold uppercase tracking-widest bg-neon-cyan/10 px-3.5 py-1.5 rounded-full border border-neon-cyan/30">Got Questions?</span>
+                <h2 class="text-3xl sm:text-5xl font-black uppercase tracking-tight mt-4">Frequently Asked Questions</h2>
+                <p class="text-gray-400 mt-3 text-sm sm:text-base">Everything you need to know about memberships, locker access, and training sessions.</p>
+            </div>
+
+            <div class="space-y-4">
+                <!-- FAQ Item 1 -->
+                <div class="reveal-up glass-card rounded-2xl border border-white/10 overflow-hidden transition-all">
+                    <button onclick="toggleFaq(1)" class="w-full px-6 py-5 text-left flex justify-between items-center font-bold text-base sm:text-lg text-white hover:text-neon-lime transition-colors cursor-pointer">
+                        <span>How does 24/7 biometric gym access work?</span>
+                        <i id="faq-icon-1" class="fa-solid fa-plus text-neon-lime transition-transform duration-300"></i>
+                    </button>
+                    <div id="faq-content-1" class="max-h-0 overflow-hidden transition-all duration-300 px-6 text-gray-400 text-sm sm:text-base leading-relaxed">
+                        <div class="pb-6">
+                            Upon joining, you will scan your face and register your secure digital keycard via the NeonFit app. You can enter our flagship facility at any hour of the day or night seamlessly.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 2 -->
+                <div class="reveal-up glass-card rounded-2xl border border-white/10 overflow-hidden transition-all">
+                    <button onclick="toggleFaq(2)" class="w-full px-6 py-5 text-left flex justify-between items-center font-bold text-base sm:text-lg text-white hover:text-neon-cyan transition-colors cursor-pointer">
+                        <span>Can I freeze or cancel my membership anytime?</span>
+                        <i id="faq-icon-2" class="fa-solid fa-plus text-neon-cyan transition-transform duration-300"></i>
+                    </button>
+                    <div id="faq-content-2" class="max-h-0 overflow-hidden transition-all duration-300 px-6 text-gray-400 text-sm sm:text-base leading-relaxed">
+                        <div class="pb-6">
+                            Yes! You can freeze your membership for up to 3 months per year for free. Cancellations require a standard 30-day notice with zero hidden cancellation fees on annual plans.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 3 -->
+                <div class="reveal-up glass-card rounded-2xl border border-white/10 overflow-hidden transition-all">
+                    <button onclick="toggleFaq(3)" class="w-full px-6 py-5 text-left flex justify-between items-center font-bold text-base sm:text-lg text-white hover:text-neon-magenta transition-colors cursor-pointer">
+                        <span>Are group classes included in the Pro Athlete plan?</span>
+                        <i id="faq-icon-3" class="fa-solid fa-plus text-neon-magenta transition-transform duration-300"></i>
+                    </button>
+                    <div id="faq-content-3" class="max-h-0 overflow-hidden transition-all duration-300 px-6 text-gray-400 text-sm sm:text-base leading-relaxed">
+                        <div class="pb-6">
+                            Absolutely. Pro Athlete and Elite VIP memberships include unlimited access to all HIIT, Yoga, CrossFit, and Cycling classes without extra per-session fees.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 4 -->
+                <div class="reveal-up glass-card rounded-2xl border border-white/10 overflow-hidden transition-all">
+                    <button onclick="toggleFaq(4)" class="w-full px-6 py-5 text-left flex justify-between items-center font-bold text-base sm:text-lg text-white hover:text-neon-lime transition-colors cursor-pointer">
+                        <span>Do you offer personal training for beginners?</span>
+                        <i id="faq-icon-4" class="fa-solid fa-plus text-neon-lime transition-transform duration-300"></i>
+                    </button>
+                    <div id="faq-content-4" class="max-h-0 overflow-hidden transition-all duration-300 px-6 text-gray-400 text-sm sm:text-base leading-relaxed">
+                        <div class="pb-6">
+                            Yes! Every new member receives a complimentary initial assessment and tailored onboarding roadmap with one of our certified expert coaches.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact / Membership Registration Form Section -->
+    <section id="contact" class="py-24 bg-neon-dark/90 relative z-10 border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <!-- Info -->
+                <div class="lg:col-span-5 space-y-6 reveal-up">
+                    <span class="text-neon-lime text-xs font-bold uppercase tracking-widest bg-neon-lime/10 px-3.5 py-1.5 rounded-full border border-neon-lime/30">Get In Touch</span>
+                    <h2 class="text-3xl sm:text-5xl font-black uppercase tracking-tight">Ready To Claim Your Free Day Pass?</h2>
+                    <p class="text-gray-400 text-sm sm:text-base leading-relaxed">
+                        Fill out the form or visit our flagship facility for a guided tour and complimentary VIP training session.
+                    </p>
+                    <div class="space-y-4 pt-2">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 rounded-xl glass-card flex items-center justify-center text-neon-lime flex-shrink-0 border border-white/10">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white text-sm">Flagship Location</h4>
+                                <p class="text-xs text-gray-400">95,Masthan Street, Pudupakakm 600088</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 rounded-xl glass-card flex items-center justify-center text-neon-cyan flex-shrink-0 border border-white/10">
+                                <i class="fa-solid fa-phone"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white text-sm">Direct Line</h4>
+                                <p class="text-xs text-gray-400">9600110697</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 rounded-xl glass-card flex items-center justify-center text-neon-magenta flex-shrink-0 border border-white/10">
+                                <i class="fa-solid fa-envelope"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white text-sm">Email Address</h4>
+                                <p class="text-xs text-gray-400">neonfit@gmail.com</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form -->
+                <div class="lg:col-span-7 glass-card rounded-3xl p-6 sm:p-10 shadow-2xl reveal-up border border-white/10">
+                    <form id="contact-form" onsubmit="handleFormSubmit(event)" class="space-y-5 sm:space-y-6">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
+                            <div>
+                                <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Full Name</label>
+                                <input type="text" id="form-name" required placeholder="John Doe" class="w-full bg-black/60 border border-white/10 rounded-xl px-4 py-3.5 text-white placeholder-gray-600 focus:outline-none focus:border-neon-lime transition-all text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Email Address</label>
+                                <input type="email" id="form-email" required placeholder="john@example.com" class="w-full bg-black/60 border border-white/10 rounded-xl px-4 py-3.5 text-white placeholder-gray-600 focus:outline-none focus:border-neon-lime transition-all text-sm">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
+                            <div>
+                                <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Phone Number</label>
+                                <input type="tel" id="form-phone" placeholder="+1 (555) 000-0000" class="w-full bg-black/60 border border-white/10 rounded-xl px-4 py-3.5 text-white placeholder-gray-600 focus:outline-none focus:border-neon-lime transition-all text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Interested Plan</label>
+                                <select id="form-plan" class="w-full bg-black/60 border border-white/10 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:border-neon-lime transition-all text-sm cursor-pointer">
+                                    <option value="Starter">Starter Plan ($49/mo)</option>
+                                    <option value="Pro Athlete">Pro Athlete Plan ($89/mo)</option>
+                                    <option value="Elite VIP">Elite VIP Plan ($149/mo)</option>
+                                    <option value="Free Day Pass">Free Day Pass (Complimentary)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Your Fitness Goals</label>
+                            <textarea id="form-message" rows="4" placeholder="Tell us about your fitness objectives..." class="w-full bg-black/60 border border-white/10 rounded-xl px-4 py-3.5 text-white placeholder-gray-600 focus:outline-none focus:border-neon-lime transition-all text-sm"></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-neon-lime text-black font-extrabold py-4 rounded-xl hover:bg-white transition-all duration-300 shadow-lg glow-lime text-base cursor-pointer">
+                            Submit & Claim Free Pass
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="glass-card border-t border-white/10 py-16 relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+            <div class="space-y-4">
+                <!-- Footer Custom Logo -->
+                <a href="#home" class="flex items-center space-x-3 group">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-neon-lime to-neon-cyan p-0.5 shadow-lg glow-lime flex items-center justify-center">
+                        <div class="w-full h-full bg-neon-dark rounded-[10px] flex items-center justify-center text-neon-lime">
+                            <i class="fa-solid fa-bolt text-lg"></i>
+                        </div>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="text-xl font-black tracking-tighter text-white uppercase leading-none">
+                            NEON<span class="text-neon-lime">FIT</span>
+                        </span>
+                        <span class="text-[9px] uppercase tracking-widest text-neon-cyan font-bold">Ultra Fitness</span>
+                    </div>
+                </a>
+                <p class="text-gray-400 text-sm leading-relaxed">
+                    Forging elite strength, resilience, and peak physique through cutting-edge facilities and world-class coaching.
+                </p>
+                <div class="flex space-x-4 text-gray-400">
+                    <a href="#" class="hover:text-neon-lime transition-colors"><i class="fa-brands fa-instagram text-lg"></i></a>
+                    <a href="#" class="hover:text-neon-lime transition-colors"><i class="fa-brands fa-facebook-f text-lg"></i></a>
+                    <a href="#" class="hover:text-neon-lime transition-colors"><i class="fa-brands fa-twitter text-lg"></i></a>
+                    <a href="#" class="hover:text-neon-lime transition-colors"><i class="fa-brands fa-youtube text-lg"></i></a>
+                </div>
+            </div>
+            <div>
+                <h4 class="font-bold text-white mb-4 text-sm uppercase tracking-wider">Quick Navigation</h4>
+                <ul class="space-y-2 text-sm text-gray-400">
+                    <li><a href="#home" class="hover:text-neon-lime transition-colors">Home</a></li>
+                    <li><a href="#features" class="hover:text-neon-lime transition-colors">Perks</a></li>
+                    <li><a href="#classes" class="hover:text-neon-lime transition-colors">Classes</a></li>
+                    <li><a href="#trainers" class="hover:text-neon-lime transition-colors">Trainers</a></li>
+                    <li><a href="#pricing" class="hover:text-neon-lime transition-colors">Pricing</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold text-white mb-4 text-sm uppercase tracking-wider">Top Sessions</h4>
+                <ul class="space-y-2 text-sm text-gray-400">
+                    <li><a href="#classes" class="hover:text-neon-lime transition-colors">Advanced Powerlifting</a></li>
+                    <li><a href="#classes" class="hover:text-neon-lime transition-colors">Metabolic Burner HIIT</a></li>
+                    <li><a href="#classes" class="hover:text-neon-lime transition-colors">Vinyasa & Mobility Flow</a></li>
+                    <li><a href="#classes" class="hover:text-neon-lime transition-colors">Extreme CrossFit WOD</a></li>
+                    <li><a href="#classes" class="hover:text-neon-lime transition-colors">Neon Cycle Beats</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold text-white mb-4 text-sm uppercase tracking-wider">Operating Hours</h4>
+                <ul class="space-y-2 text-sm text-gray-400">
+                    <li class="flex justify-between"><span>Monday - Sunday:</span> <span class="text-white font-medium">24 / 7 Access</span></li>
+                    <li class="flex justify-between"><span>Staffed Hours:</span> <span class="text-white font-medium">06:00 - 22:00</span></li>
+                    <li class="pt-3 text-xs text-neon-lime">Biometric Keycard Entry Active</li>
+                </ul>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 border-t border-white/10 text-center text-xs text-gray-500">
+            &copy; 2026 NEONFIT Hyper-Fitness Inc. All rights reserved. Built for champions.
+        </div>
+    </footer>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // Custom Thunder Mouse Cursor & Particle Trail
+        const cursor = document.getElementById('custom-cursor');
+        let mouseX = 0;
+        let mouseY = 0;
+        let cursorX = 0;
+        let cursorY = 0;
+
+        window.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+
+            // Spawn spark thunder particle occasionally on mouse move
+            if (Math.random() < 0.25) {
+                createThunderParticle(mouseX, mouseY);
+            }
+        });
+
+        function renderCursor() {
+            cursorX += (mouseX - cursorX) * 0.2;
+            cursorY += (mouseY - cursorY) * 0.2;
+            if(cursor) {
+                cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0) translate(-50%, -50%)`;
+            }
+            requestAnimationFrame(renderCursor);
+        }
+        requestAnimationFrame(renderCursor);
+
+        function createThunderParticle(x, y) {
+            const particle = document.createElement('div');
+            particle.className = 'thunder-particle';
+            particle.innerHTML = '<i class="fa-solid fa-bolt text-neon-lime"></i>';
+            particle.style.left = (x + (Math.random() * 16 - 8)) + 'px';
+            particle.style.top = (y + (Math.random() * 16 - 8)) + 'px';
+            document.body.appendChild(particle);
+
+            setTimeout(() => {
+                particle.remove();
+            }, 600);
+        }
+
+        // GSAP ScrollTrigger Animations
+        document.addEventListener("DOMContentLoaded", () => {
+            gsap.registerPlugin(ScrollTrigger);
+
+            // Hero Entrance
+            gsap.from(".hero-text > *", {
+                opacity: 0,
+                y: 50,
+                duration: 1,
+                stagger: 0.15,
+                ease: "power3.out"
+            });
+
+            gsap.from(".hero-image", {
+                opacity: 0,
+                scale: 0.9,
+                duration: 1.2,
+                delay: 0.3,
+                ease: "power3.out"
+            });
+
+            // Section Reveal animations
+            const reveals = document.querySelectorAll(".reveal-up");
+            reveals.forEach(el => {
+                gsap.to(el, {
+                    scrollTrigger: {
+                        trigger: el,
+                        start: "top 85%",
+                        toggleActions: "play none none none"
+                    },
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.8,
+                    ease: "power3.out"
+                });
+            });
+        });
+
+        // Mobile Menu Drawer Toggle
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIcon = document.getElementById('menu-icon');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+        let isMenuOpen = false;
+
+        function toggleMobileMenu() {
+            isMenuOpen = !isMenuOpen;
+            if (isMenuOpen) {
+                mobileMenu.style.maxHeight = mobileMenu.scrollHeight + 'px';
+                menuIcon.classList.remove('fa-bars');
+                menuIcon.classList.add('fa-xmark');
+            } else {
+                mobileMenu.style.maxHeight = '0px';
+                menuIcon.classList.remove('fa-xmark');
+                menuIcon.classList.add('fa-bars');
+            }
+        }
+
+        menuToggle.addEventListener('click', toggleMobileMenu);
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (isMenuOpen) toggleMobileMenu();
+            });
+        });
+
+        // Navbar blur effect on scroll
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 30) {
+                navbar.classList.add('bg-neon-dark/95', 'shadow-2xl');
+            } else {
+                navbar.classList.remove('bg-neon-dark/95', 'shadow-2xl');
+            }
+        });
+
+        // Interactive Class Filtering with GSAP cross-fade
+        function filterClasses(category, event) {
+            const buttons = document.querySelectorAll('.class-filter-btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-neon-lime', 'text-black', 'font-extrabold', 'shadow-lg');
+                btn.classList.add('glass-card', 'text-gray-300', 'font-bold');
+            });
+
+            event.target.classList.remove('glass-card', 'text-gray-300', 'font-bold');
+            event.target.classList.add('bg-neon-lime', 'text-black', 'font-extrabold', 'shadow-lg');
+
+            const cards = document.querySelectorAll('.class-card');
+            cards.forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.style.display = 'block';
+                    gsap.fromTo(card, { opacity: 0, scale: 0.95 }, { opacity: 1, scale: 1, duration: 0.4 });
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Pricing Monthly / Annual Toggle
+        let isAnnual = false;
+        function togglePricing() {
+            isAnnual = !isAnnual;
+            const circle = document.getElementById('toggle-circle');
+            const monthlyLabel = document.getElementById('monthly-label');
+            const annualLabel = document.getElementById('annual-label');
+            const amounts = document.querySelectorAll('.price-amount');
+            const durations = document.querySelectorAll('.price-duration');
+
+            if (isAnnual) {
+                circle.classList.remove('translate-x-0');
+                circle.classList.add('translate-x-8');
+                monthlyLabel.classList.remove('font-bold', 'text-white');
+                monthlyLabel.classList.add('font-medium', 'text-gray-400');
+                annualLabel.classList.remove('font-medium', 'text-gray-400');
+                annualLabel.classList.add('font-bold', 'text-white');
+
+                amounts.forEach(el => {
+                    el.innerText = '$' + el.getAttribute('data-annual');
+                    gsap.fromTo(el, { scale: 1.2, color: '#CCFF00' }, { scale: 1, color: '#FFFFFF', duration: 0.3 });
+                });
+                durations.forEach(el => {
+                    el.innerText = '/month (billed annually)';
+                });
+            } else {
+                circle.classList.remove('translate-x-8');
+                circle.classList.add('translate-x-0');
+                monthlyLabel.classList.remove('font-medium', 'text-gray-400');
+                monthlyLabel.classList.add('font-bold', 'text-white');
+                annualLabel.classList.remove('font-bold', 'text-white');
+                annualLabel.classList.add('font-medium', 'text-gray-400');
+
+                amounts.forEach(el => {
+                    el.innerText = '$' + el.getAttribute('data-monthly');
+                    gsap.fromTo(el, { scale: 1.2, color: '#CCFF00' }, { scale: 1, color: '#FFFFFF', duration: 0.3 });
+                });
+                durations.forEach(el => {
+                    el.innerText = '/month';
+                });
+            }
+        }
+
+        // FAQ Accordion Toggle
+        const activeFaqs = {};
+        function toggleFaq(id) {
+            const content = document.getElementById(`faq-content-${id}`);
+            const icon = document.getElementById(`faq-icon-${id}`);
+            
+            if (activeFaqs[id]) {
+                content.style.maxHeight = '0px';
+                icon.classList.remove('rotate-45', 'text-neon-lime');
+                icon.classList.add('fa-plus');
+                activeFaqs[id] = false;
+            } else {
+                // close others
+                for(let i=1; i<=4; i++) {
+                    if(i !== id && activeFaqs[i]) {
+                        document.getElementById(`faq-content-${i}`).style.maxHeight = '0px';
+                        document.getElementById(`faq-icon-${i}`).classList.remove('rotate-45', 'text-neon-lime');
+                        document.getElementById(`faq-icon-${i}`).classList.add('fa-plus');
+                        activeFaqs[i] = false;
+                    }
+                }
+                content.style.maxHeight = content.scrollHeight + 'px';
+                icon.classList.remove('fa-plus');
+                icon.classList.add('rotate-45', 'text-neon-lime');
+                activeFaqs[id] = true;
+            }
+        }
+
+        // Toast Notification System
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toast-message');
+            toastMsg.innerText = message;
+            toast.classList.remove('translate-y-32', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-32', 'opacity-0');
+            }, 4500);
+        }
+
+        // Booking Modal Management
+        function openModal(className) {
+            const modal = document.getElementById('booking-modal');
+            const content = document.getElementById('booking-modal-content');
+            const title = document.getElementById('modal-title');
+            title.innerText = `Book: ${className}`;
+            
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            content.classList.remove('scale-95');
+            content.classList.add('scale-100');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('booking-modal');
+            const content = document.getElementById('booking-modal-content');
+            
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            content.classList.remove('scale-100');
+            content.classList.add('scale-95');
+        }
+
+        function handleModalSubmit(e) {
+            e.preventDefault();
+            const name = document.getElementById('modal-name').value;
+            closeModal();
+            showToast(`Success, ${name}! Your session spot has been confirmed.`);
+            e.target.reset();
+        }
+
+        function selectPlan(planName) {
+            document.getElementById('form-plan').value = planName;
+            document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+            showToast(`${planName} selected. Complete your details below.`);
+        }
+ 
+            showToast(`Thank you, ${name}! Your free pass inquiry has been sent.`);
+            document.getElementById('contact-form').reset();
+    
+    </script>
+    
+</body>
+</html> 
