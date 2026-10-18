@@ -19,14 +19,10 @@ A high-energy, modern, and fully responsive gym and fitness landing page built u
 
 🛠️ Tech Stack
 
-Technology| Purpose
-HTML5| Website structure
-Tailwind CSS| Utility-first styling
-Custom CSS| Animations, effects, and responsive layouts
-JavaScript (ES6+)| Interactive functionality
-GSAP| Advanced animations, if implemented
-Font Awesome| Icons
-Google Fonts| Typography
+Technology| Purpose |HTML5| Website structure|Tailwind CSS| Utility-first styling
+Custom CSS| Animations, effects, and responsive layouts|
+JavaScript (ES6+)Interactive functionality|GSAP| Advanced animations, 
+if implemented|Font Awesome| Icons
 
 🚀 Getting Started
 
@@ -40,7 +36,7 @@ Installation
 
 1. Clone the repository:
    
-   git clone 
+   git clone "url"
 
 2. Open the project folder in Visual Studio Code.
 
@@ -82,7 +78,7 @@ Zeenath Nisha S
 
 Aspiring Software Developer | Frontend Development Enthusiast
 
-- GitHub:
+- GitHub: https://github.com/zeenathnisha172-droid
 
 ---
 
